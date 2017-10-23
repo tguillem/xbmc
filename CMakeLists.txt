@@ -45,6 +45,7 @@ option(ENABLE_UPNP        "Enable UPnP support?" ON)
 option(ENABLE_AIRTUNES    "Enable AirTunes support?" ON)
 option(ENABLE_OPTICAL     "Enable optical support?" ON)
 option(ENABLE_PYTHON      "Enable python support?" ON)
+option(ENABLE_LIBVLC      "Enable LIBVLC support?" OFF)
 # use ffmpeg from depends or system
 option(ENABLE_INTERNAL_FFMPEG "Enable internal ffmpeg?" OFF)
 if(UNIX)
@@ -177,6 +178,10 @@ if(ENABLE_OPENSSL)
   list(APPEND DEP_DEFINES "-DHAVE_OPENSSL=1")
 endif()
 
+if(ENABLE_LIBVLC)
+  find_package(LibVLC REQUIRED)
+endif()
+
 if(ENABLE_UPNP)
   list(APPEND DEP_DEFINES "-DUSE_UPNP=1")
 endif()
@@ -293,6 +298,7 @@ core_add_optional_subdirs_from_filelist(${CMAKE_SOURCE_DIR}/cmake/treedata/optio
                                         ${CMAKE_SOURCE_DIR}/cmake/treedata/optional/${CORE_SYSTEM_NAME}/*.txt)
 
 target_link_libraries(lib${APP_NAME_LC} PUBLIC ${core_DEPENDS} ${SYSTEM_LDFLAGS} ${DEPLIBS} ${CMAKE_DL_LIBS})
+target_link_libraries(lib${APP_NAME_LC} PUBLIC -L${LIBVLC_LIBRARY_DIRS} ${LIBVLC_LIBRARIES})
 set_target_properties(lib${APP_NAME_LC} PROPERTIES PROJECT_LABEL "xbmc")
 source_group_by_folder(lib${APP_NAME_LC} RELATIVE ${CMAKE_SOURCE_DIR}/xbmc)
 if(WIN32)

@@ -228,6 +228,7 @@ bool CWinSystemX11GLContext::RefreshGLContext(bool force)
   VIDEOPLAYER::CRendererFactory::ClearRenderer();
   CLinuxRendererGL::Register();
 
+#if 0
   m_pGLContext = new CGLContextEGL(m_dpy);
   success = m_pGLContext->Refresh(force, m_nScreen, m_glWindow, m_newGlContext);
   if (success)
@@ -250,9 +251,10 @@ bool CWinSystemX11GLContext::RefreshGLContext(bool force)
       return success;
     }
   }
+#endif
 
 #ifdef HAS_GLX
-  delete m_pGLContext;
+  //delete m_pGLContext;
 
   // fallback for vdpau
   m_pGLContext = new CGLContextGLX(m_dpy);

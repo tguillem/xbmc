@@ -23,6 +23,7 @@
 #include "cores/IPlayer.h"
 #include "PlayerCoreFactory.h"
 #include "cores/VideoPlayer/VideoPlayer.h"
+#include "cores/LibVLCPlayer/LibVLCPlayer.h"
 #include "cores/paplayer/PAPlayer.h"
 #include "cores/RetroPlayer/RetroPlayer.h"
 #include "cores/ExternalPlayer/ExternalPlayer.h"
@@ -88,11 +89,13 @@ public:
     IPlayer* pPlayer;
     if (m_type.compare("video") == 0)
     {
-      pPlayer = new CVideoPlayer(callback);
+      pPlayer = new KODI::CLibVLCPlayer(callback);
+      //pPlayer = new CVideoPlayer(callback);
     }
     else if (m_type.compare("music") == 0)
     {
-      pPlayer = new PAPlayer(callback);
+      pPlayer = new KODI::CLibVLCPlayer(callback);
+      //pPlayer = new PAPlayer(callback);
     }
     else if (m_type.compare("game") == 0)
     {
